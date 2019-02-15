@@ -1,0 +1,19 @@
+div {
+	border:  1px solid red;
+}
+
+.header img {
+	width:  80%;
+}
+.header {
+	background-color: #EFEFEF;
+}
+
+.card-title {
+		margin-bottom: 30px;
+	}
+
+
+.navcolour {
+	background-color:  #CAEBF2;
+}
