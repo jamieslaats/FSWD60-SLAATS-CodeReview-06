@@ -1,21 +1,75 @@
-div {
+/* div {
 	border:  1px solid red;
+} */
+body {
+	margin: 20px 0px -5px 0px;
 }
 
+/*---SECTION STYLING FOR HEADER AND NAV BAR -->*/
 .header img {
-	width:  80%;
+	width:  50%;
 }
 .header {
-	background-color: #EFEFEF;
+	background-color: #4ABDAC;
+}
+.navcolour {
+	background-color:  #DFDCE3;
+}
+.navcolour li a {
+	color: #4ABDAC;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+#navstyling li a:hover {
+	background-color: #FC4A1A;
+	color: #DFDCE3;
 }
 
-.card-title {
+
+/*---MAINCONTENT SECTION STYLING ---*/
+
+.jumbotron {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  color: #FC4A1A;
+  background-color: #DFDCE3;
+ }
+.travelcard-title {
 		margin-bottom: 30px;
 	}
-.card-img-top {
+.travelcard-img-top {
 	width:  100%;
+	border-radius: 5%;
+}
+.content1 h2 {
+	background-color: #4ABDAC;
+	color:  #F7B733;
+	font-weight: bold;
+	padding: 5px 0px 5px 0px;
+}
+.travelcard {
+	background-color: #DFDCE3;
+	border-radius: 1%;
+	padding: 0px 2px 0px 2px;
+}
+span {
+	font-weight: bold;
+}
+.font-italic {
+	text-align: center;
 }
 
-.navcolour {
-	background-color:  #CAEBF2;
+/*---FOOTER SECTION STYLING ---*/
+#footer {
+	background-color: #4ABDAC ;
+	color: #DFDCE3 ;
+	margin: 20px 0px 0px 0px;
+	padding: 15px 0px 15px 0px;
+}
+
+@media (max-width: 768px) { 
+.travelcard-img-top{
+  display: none;
+  } 
 }

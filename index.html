@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
 
 <head>
@@ -20,21 +20,21 @@
                 <img class="center-block" src="IMG/happyfeetlogo.png">
             </div>
         </header><!-- /header -->
-        <nav class="navbar navcolour">
-            <ul class="nav nav-pills navbar-text">
-                <li><a href="#Home" title="Home">Home</a></li>
-                <li><a href="#Railtravel" title="Railtravel">Rail Travel</a></li>
-                <li><a href="#Planetravel" title="Planetravel">Plane Travel</a></li>
-                <li><a href="#Cartravel" title="Cartravel">Car Travel</a></li>
-                <li><a href="#About" title="About">About</a></li>
-                <li><a href="#Contact" title="Contact">Contact</a></li>
+        <nav class="navbar navcolour navbar-justify">
+            <ul class="nav nav-pills nav-justified" id="navstyling">
+                <li class="nav-item"><a href="index.html" title="Home">Home</a></li>
+                <li class="nav-item"><a href="#About" title="About">About</a></li>
+                <li class="nav-item"><a href="#TopSights" title="TopSights">Top Sights</a></li>
+                <li class="nav-item"><a href="#Restaurants" title="Restaurants">Restaurants</a></li>
+                <li class="nav-item"><a href="#Events" title="Events">Events</a></li>
+                <li class="nav-item"><a href="#Contact" title="Contact">Contact</a></li>
             </ul>
         </nav>
         <main>
             <!---Start of Jumbotron Section --->
             <div class="jumbotron">
                 <h1 class="card-title"><strong>
-                        <center>St. Petersburg</center>
+                        <center>St. Petersburg, Russia</center>
                     </strong></h1>
                 <!---Start of Carousel for Pictures--->
                 <div id="carousel-stpetersburg" class="carousel slide" data-ride="carousel">
@@ -66,31 +66,38 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <!--Controls for Carousel-->
+                <!--End of Controls for Carousel-->
                 <h3 class="card-title">
                     <center>A City Everyone Must Visit Once in Their Life!<center>
                 </h3>
             </div>
-            <!---End of Jumbotron Section --->
-            <!---START OF THE TRAVEL AND CONTENT SECTION --->
+            <!---END OF JUMBOTRON SECTION --->
+            <!---START OF THE CONTENT SECTION --->
             <div class="fluid-container mt-2">
                 <div class="row">
                     <div class="col-lg-12 content1" id="sights">
-                        <h5>Top Sights</h5>
+                        <a name="TopSights">
+                            <h2>Top Sights</h2>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 content1" id="eatery">
-                        <h5>Top Restaurants</h5>
+                        <a name="Restaurants">
+                            <h2>Top Restaurants</h2>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 conetsection1" id="events">
-                        <h5>Top Events</h5>
+                    <div class="col-lg-12 content1" id="events">
+                        <a name="Events">
+                            <h2>Top Events</h2>
+                        </a>
                     </div>
                 </div>
             </div>
         </main>
+        <!---FOOTER SECTION BEGINNING --->
         <footer id="footer">
             <div>
                 <img class="center-block" src="img/happyfeetlogo.png" alt="HappyFeetTravelBlog" width="300">
@@ -101,7 +108,9 @@
         </footer>
         <!--- END OF FOOTER SECTION --->
     </div>
+
     <script src="TSJS/homepage.js" type="text/javascript" charset="utf-8"></script>
+    <script src="TSJS/home_extra.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
 </html>
