@@ -12,7 +12,9 @@ div {
 .card-title {
 		margin-bottom: 30px;
 	}
-
+.card-img-top {
+	width:  100%;
+}
 
 .navcolour {
 	background-color:  #CAEBF2;
