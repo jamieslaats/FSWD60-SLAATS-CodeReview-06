@@ -1,3 +1,31 @@
+//Using Classes and Constructors and Render to Create Main Div Content Section.
+
+class contentDivs {
+	headings: string;
+	idTags: string;
+	constructor(headings, idTags){
+	this.headings = headings;
+	this.idTags = idTags;
+	}
+	render (){
+		return document.querySelector("#contentsection").innerHTML += 
+        "<div class='row'><div class='col-lg-12 content1' id='"+this.idTags+"'><a name='"+this.idTags+"'><h2>"+this.headings+"</h2></a></div></div>"
+	};
+
+};
+
+var contentSetUp = []; //Storing and creating the array for the content creation section.
+
+contentSetUp.push(new contentDivs("Top Sights", "sights"));
+contentSetUp.push(new contentDivs("Top Restaurants", "eatery"));
+contentSetUp.push(new contentDivs("Top Events", "events"));
+
+for(var csu in contentSetUp) {
+	contentSetUp[csu].render(); //Used to render and print the details to the html output above on the render function. 
+}
+
+
+//Using Classes and Constructors and Render to Create Now The ACTUAL Content.
 class hotspot{
 	image: "";
 	name: string;
@@ -14,8 +42,8 @@ class hotspot{
 		this.postCode = postCode;
 		this.telephone = telephone;
 		this.date = date;
-	}
-}
+	};
+};
 
 class sights extends hotspot {
 	metro: string;
@@ -26,7 +54,7 @@ class sights extends hotspot {
 		this.metro = metro;
 		this.openTimes = openTimes;
 		this.entryCost = entryCost;
-	}
+	};
 	render () {
         return document.querySelector("#sights").innerHTML += 
         "<div class='col-lg-3 col-md-6 col-sd-12' id='dataset'><div class='travelcard'><img class='travelcard-img-top'src='" + this.image + "'alt='TravelCard image cap'><div class='travelcard-body'><h3 class='travelcard-title'>" + this.name + "</h3>\n <p class='travelcard-text'><span>Address:</span> " + this.street + ", " + this.city + ", " + this.postCode +  "</p><p class='travelcard-text'><span>Tel:</span> " + this.telephone + "</p><p class='travelcard-text'><span>Metro:</span> " + this.metro + "</p><p class='travelcard-text'><span>Opening Times:</span> " + this.openTimes + "</p><p class='travelcard-text'><span>Entry Cost:</span> " + this.entryCost + "</p><p class='font-italic text-secondary'>Created: " + this.date + "</p></div></div></div"
@@ -42,7 +70,7 @@ class eatery extends hotspot {
 		this.type = type;
 		this.value = value;
 		this.webAddress = webAddress;
-	}
+	};
 	render () {
         return document.querySelector("#eatery").innerHTML += 
         "<div class='col-lg-3 col-md-6 col-sd-12 id='dataset'><div class='travelcard'><img class='travelcard-img-top'src='" + this.image + "'alt='TravelCard image cap'><div class='travelcard-body'><h3 class='travelcard-title'>" + this.name + "</h3>\n <p class='travelcard-text'><span>Address:</span> " + this.street + ", " + this.city + ", " + this.postCode +  "</p><p class='travelcard-text'><span>Tel:</span> " + this.telephone + "</p><p class='travelcard-text'><span>Style:</span> " + this.type + "</p><p class='travelcard-text'><span>Value:</span> " + this.value + "</p><p class='travelcard-text'><span>Web:</span> " + this.webAddress + "</p><p class='font-italic text-secondary'>Created: " + this.date + "</p></div></div></div"
@@ -60,18 +88,18 @@ class events extends hotspot {
 		this.eventDate = eventDate;
 		this.eventTime = eventTime;
 		this.ticketPrice = ticketPrice;
-	}
+	};
 	render () {
         return document.querySelector("#events").innerHTML += 
         "<div class='col-lg-3 col-md-6 col-sd-12' id='dataset'><div class='travelcard'><img class='travelcard-img-top'src='" + this.image + "'alt='TravelCard image cap'><div class='travelcard-body'><h3 class='travelcard-title'>" + this.name + "</h3>\n <p class='travelcard-text'><span>Location:</span> " + this.eventPlace + "</p><p class='travelcard-text'><span>Address:</span> " + this.street + ", " + this.city + ", " + this.postCode +  "</p><p class='travelcard-text'><span>Tel:</span> " + this.telephone + "</p><p class='travelcard-text'><span>Date:</span> " + this.eventDate + "</p><p class='travelcard-text'><span>Showings:</span> " + this.eventTime + "</p><p class='travelcard-text'><span>Price:</span> " + this.ticketPrice + "</p><p class='font-italic text-secondary'>Created: " + this.date + "</p></div></div></div"
         };
-}
+};
 
 
 var locationDetails = []; //Store all objects into this location. 
 
 //Details on Location Sightseeing
-locationDetails.push(new sights("./IMG/0.jpg", "The Hermitage (The Winter Palace", "2, Dvortsovaya Ploschad", "St. Petersburg", "190000", "+7 (812) 571-3420","24.05.2018 12:45", "Admiralteyskaya","Daily 10:30am to 6pm. Last admission is at 5:30pm. Wednesday and Friday, till 9pm. Last admission is at 8:30pm", "600 Rbl"));
+locationDetails.push(new sights("./IMG/0.jpg", "The Hermitage (The Winter Palace)", "2, Dvortsovaya Ploschad", "St. Petersburg", "190000", "+7 (812) 571-3420","24.05.2018 12:45", "Admiralteyskaya","Daily 10:30am to 6pm. Last admission is at 5:30pm. Wednesday and Friday, till 9pm. Last admission is at 8:30pm", "600 Rbl"));
 locationDetails.push(new sights("./IMG/1.jpg", "The Mariinsky Theatre", "1, Teatralnaya Ploshchad", "St. Petersburg", "190000", "+7 (812) 326-4141","24.06.2018 10:00", "Admiralteyskaya, Sadovaya / Sennaya Ploshchad / Spasskaya","Daily 5pm to 12pm", "50 Rbl",));
 locationDetails.push(new sights("./IMG/st-isaacs-cathedral-in-st-petersburg.jpg", "St. Isaac's Cathedral & Colonnade", "4, Isaakievskaya Square", "St. Petersburg", "190000", "+7 (812) 315-9732","05.010.2018 09:00", "Admiralteyskaya","Daily 10.30 am to 6 pm. Last admission is at 5.30 pm. Night openings of the Colonnade in the White Nights only (June 1 - August 20): 10.30 pm to 4.30 am.", "Adult: 250 Rbl, Child: 50 Rbl"));
 locationDetails.push(new sights("./IMG/peterpaulfortress.jpg", "The Peter & Paul Fortress", "Zayachy (Hare) Island", "St. Petersburg", "190000", "+7 (812) 326-4141","04.09.2018 17:00", "Gorkovskaya / Sportivnaya","The grounds of the fortress at open 6am to 10pm. All exhibitions are open daily, except Wednesdays, 10 am to 6 pm. Last admission is at 5 pm. Tuesdays, 10 am to 5 pm. Last admission is at 4 pm.", "350 Rbl"));
