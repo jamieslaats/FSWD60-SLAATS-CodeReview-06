@@ -15,7 +15,7 @@
 <!---BEGINNING OF BODY SECTION --->
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <header id="header">
             <div class="header">
                 <img class="center-block" src="IMG/happyfeetlogo.png">
@@ -25,8 +25,9 @@
             <ul class="nav nav-pills nav-justified" id="navstyling">
                 <li class="nav-item"><a href="index.html" title="Home">Home</a></li>
                 <li class="nav-item"><a href="#about" title="About">About</a></li>
-                <li class="nav-item"><a href="#register" title="Register">Register</a></li>
-                <li class="nav-item"><a href="#login" title="login">Login</a></li>
+                <li class="nav-item"><a href="#sights" title="TopSights">Top Sights</a></li>
+                <li class="nav-item"><a href="#eatery" title="Restaurants">Restaurants</a></li>
+                <li class="nav-item"><a href="#events" title="Events">Events</a></li>
                 <li class="nav-item"><a href="#contact" title="Contact">Contact</a></li>
             </ul>
         </nav>
