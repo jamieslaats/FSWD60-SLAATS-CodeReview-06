@@ -26,11 +26,11 @@
 
         <nav class="navbar navcolour navbar-justify">
             <ul class="nav nav-pills nav-justified" id="navstyling">
-                <li class="nav-item"><a href="index.html" title="Home">Home</a></li>
+                <li class="nav-item"><a href="home.php" title="Home">Home</a></li>
                 <li class="nav-item"><a href="#about" title="About">About</a></li>
                 <li class="nav-item"><a href="#sights" title="TopSights">Top Sights</a></li>
-                <li class="nav-item"><a href="#eatery" title="Restaurants">Restaurants</a></li>
-                <li class="nav-item"><a href="#events" title="Events">Events</a></li>
+                <li class="nav-item"><a href="restaurant.php" title="Restaurants">Restaurants</a></li>
+                <li class="nav-item"><a href="event.php" title="Events">Events</a></li>
                 <li class="nav-item"><a href="#contact" title="Contact">Contact</a></li>
                 <li class="nav-item"><a href="adminpanel.php" title="AdminHome">Admin Home</a></li>
                 <li class="nav-item"><a href="#logout" title="logout">Logout</a></li>
@@ -77,17 +77,6 @@
                             }
                         };
                         xhttp.open("GET","./actions/viewuser.php",true);
-                        xhttp.send();
-                    }
-
-                    function editUser() {
-                    var xhttp = new XMLHttpRequest(); //create variable xhttp
-                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
-                            if (this.readyState == 4 && this.status == 200) {
-                                document.getElementById("edituserdataoutput").innerHTML = this.responseText;
-                            }
-                        };
-                        xhttp.open("GET",".php",true);
                         xhttp.send();
                     }
 

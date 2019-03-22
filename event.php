@@ -15,7 +15,7 @@
 <!---BEGINNING OF BODY SECTION --->
 
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <header id="header">
             <div class="header">
                 <img class="center-block" src="IMG/happyfeetlogo.png">
@@ -23,20 +23,19 @@
         </header><!-- /header -->
         <nav class="navbar navcolour navbar-justify">
             <ul class="nav nav-pills nav-justified" id="navstyling">
-                <li class="nav-item"><a href="index.html" title="Home">Home</a></li>
+                <li class="nav-item"><a href="home.php" title="Home">Home</a></li>
                 <li class="nav-item"><a href="#about" title="About">About</a></li>
                 <li class="nav-item"><a href="#sights" title="TopSights">Top Sights</a></li>
-                <li class="nav-item"><a href="#eatery" title="Restaurants">Restaurants</a></li>
-                <li class="nav-item"><a href="#events" title="Events">Events</a></li>
+                <li class="nav-item"><a href="restaurant.php" title="Restaurants">Restaurants</a></li>
+                <li class="nav-item"><a href="event.php" title="Events">Events</a></li>
                 <li class="nav-item"><a href="#contact" title="Contact">Contact</a></li>
+                <li class="nav-item"><a href="logout.php" title="logout">Logout</a></li>
             </ul>
         </nav>
         <main>
             <!---Start of Jumbotron Section --->
             <div class="jumbotron">
-                <h1 class="card-title"><strong>
-                        <center>St. Petersburg, Russia</center>
-                    </strong></h1>
+                <h1 class="card-title"><strong><center>St. Petersburg, Russia</center></strong></h1>
                 <!---Start of Carousel for Pictures--->
                 <div id="carousel-stpetersburg" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
@@ -69,13 +68,58 @@
                     </a>
                 </div>
                 <!--End of Controls for Carousel-->
-                <h3 class="card-title">
-                    <center>A City Everyone Must Visit Once in Their Life!<center>
-                </h3>
-            </div>
-            <!---END OF JUMBOTRON SECTION --->
-            <!---START OF THE CONTENT SECTION --->
-            <div class="fluid-container mt-2" id="contentsection"></div>
+                <h3 class="card-title"><center>A City Everyone Must Visit Once in Their Life!<center></h3>
+                </div>
+                <!---END OF JUMBOTRON SECTION --->
+                <!---START OF THE CONTENT SECTION --->
+                <div>
+
+                    <div class='row'>
+                        <div class='col-lg-12 content1' id="sights">
+                            <a name="sights"><h2><span id="s1">Top</span> Events</h2></a>
+                        </div>
+                    </div>
+                    <div class='row'>
+
+                        <?php
+                        require_once 'actions/db_connect.php';
+
+                        $sql = "SELECT `Content_ID`,`Image`, `Locationtype`, `Locationname`, `Street`, `City`,`Postcode`, `Telephone`, `Webaddress`, `Metrostop`, `OpenTimes`, `Value`, `Eventplacename`,`Style`, `Entrycost`, `Eventtime`, `Eventdate`, `contentdata`.`Created` 
+                        FROM `contentdata` 
+                        INNER JOIN `addressdata` ON `contentdata`.`fk_Address_ID` = `addressdata`.`Address_ID`
+                        WHERE `contentdata`.`Locationtype` = 'Event'";
+
+                        $result = $connect->query($sql);
+
+                        if($result->num_rows > 0) {
+                            while($event = $result->fetch_assoc()) {
+
+
+                               echo   '<div class="col-lg-6 col-md-6 col-sd-12" id="'.$event['Content_ID'].'">
+                               <div class="travelcard"><img class="travelcard-img-top" src="' .$event['Image']. '" alt="TravelCard image cap">
+                               <div class="travelcard-body"><h3 class="travelcard-title">' .$event['Locationname']. '</h3>
+                               <p class="travelcard-text"><span>Location:</span> "' .$event['Eventplacename']. '"</p>
+                               <p class="travelcard-text"><span>Address:</span> "'.$event['Street'].'", "' .$event['City']. '", "' .$event['Postcode'].  '"</p>
+                               <p class="travelcard-text"><span>Tel:</span> "' .$event['Telephone']. '"</p>
+                               <p class="travelcard-text"><span>Date:</span> "' .$event['Eventdate']. '"</p>
+                               <p class="travelcard-text"><span>Showings:</span> "' .$event['Eventtime']. '"</p>
+                               <p class="travelcard-text"><span>Price:</span> "' .$event['Entrycost']. '"</p>
+                               <p class="font-italic text-secondary">Created: "' .$event['Created']. '"</p>
+                               </div>
+                               </div>
+                               </div>';
+                           }
+                       };
+                       ?>
+
+                   </div>
+                   <div class="row">
+                    <div class='col-lg-12' id='toparrow'>
+                        <a href='home.php'><span class='glyphicon glyphicon-arrow-up'></span> Top</a>
+                    </div>
+                </div>
+            </div>    
+
             <!---END OF THE CONTENT SECTION --->
         </main>
         <!---FOOTER SECTION BEGINNING --->

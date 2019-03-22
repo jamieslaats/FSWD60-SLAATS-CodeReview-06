@@ -1,3 +1,19 @@
+
+<script>
+   function editUser() {
+                    var xhttp = new XMLHttpRequest(); //create variable xhttp
+                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("edituserdataoutput").innerHTML = this.responseText;
+                            }
+                        };
+                        xhttp.open("GET","./actions/edituser.php",true);
+                        xhttp.send();
+                    }
+
+
+</script>
+
 <?php
 require_once 'db_connect.php';
 
@@ -38,8 +54,8 @@ if($result->num_rows > 0) {
    <td>".$row['Created']."</td>
    <td>".$row['Modified']."</td>
    <td> 
-   <a href='updatemedia.php?User_ID=".$row['User_ID']."'><button type='button'><i class='fas fa-edit'></i></button></a>
-   <a href='deletemedia.php?User_ID=".$row['User_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
+   <a href='./actions/edituser.php?User_ID=".$row['User_ID']."'><button type='button' onclick='editUser()'><i class='fas fa-edit'></i></button></a>
+   <a href='./actions/deleteuser.php?User_ID=".$row['User_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
    </tr>";
 
  }
@@ -50,3 +66,5 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
+
+<div id="edituserdataoutput"></div>
