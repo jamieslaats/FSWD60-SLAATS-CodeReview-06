@@ -15,7 +15,7 @@
 <!---BEGINNING OF BODY SECTION --->
 
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <header id="header">
             <div class="header">
                 <img class="center-block" src="IMG/happyfeetlogo.png">
@@ -30,7 +30,6 @@
                 <li class="nav-item"><a href="#events" title="Events">Events</a></li>
                 <li class="nav-item"><a href="#contact" title="Contact">Contact</a></li>
                 <li class="nav-item"><a href="#logout" title="logout">Logout</a></li>
-
             </ul>
         </nav>
         <main>

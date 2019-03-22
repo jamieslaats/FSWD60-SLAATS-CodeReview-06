@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://getbootstrap.com/docs/3.3/examples/carousel/carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/signin.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -29,27 +30,27 @@
             <!---Start of Jumbotron Section1 --->
             <div class="jumbotron">
                 <h1 class="card-title"><strong>
-                        <center>Welcome</center>
-                    </strong></h1>
+                    <center>Welcome</center>
+                </strong></h1>
             </div>
             <!---END OF JUMBOTRON SECTION1 --->
             <!---START OF THE LOGIN SECTION --->
             <div class="fluid-container mt-2" id="login">
                 <div class="jumbotron">
-                <form class="form-signin" method="POST" action="home.php">
-            <h2 class="form-signin-heading">Please Sign In:</h2>
-            <br>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="Email" required>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="Password" required>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember Me
-                </label>
-            </div>
-            <a href="home.php"><button id="loginbtn" class="btn btn-lg btn-block" type="submit" name="submit">Sign in</button></a>
-        </form>
+                    <form class="form-signin" method="POST" action="home.php">
+                        <h2 class="form-signin-heading">Please Sign In:</h2>
+                        <br>
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="Email" required>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="Password" required>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Remember Me
+                            </label>
+                        </div>
+                        <a href="home.php"><button id="loginbtn" class="btn btn-lg btn-block" type="submit" name="submit">Sign in</button></a>
+                    </form>
                     
                 </div>
             </div>
