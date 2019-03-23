@@ -1,17 +1,30 @@
+<?php
 
+  ob_start();
+  session_start();
+  require_once 'actions/db_connect.php';
+
+  if (isset($_SESSION['Admin']) == ""){
+        header("Location: login.php");
+            exit;
+}
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
+    $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+
+?>
+<!--This script is written, but at the moment isn't working as planned need to come back to understand why -->
 <script>
    function editUser() {
-                    var xhttp = new XMLHttpRequest(); //create variable xhttp
-                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
+                    var euser = new XMLHttpRequest(); //create variable xhttp
+                        euser.onreadystatechange = function() { //xhttp then on ready state change runs function.
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("edituserdataoutput").innerHTML = this.responseText;
                             }
                         };
-                        xhttp.open("GET","./actions/edituser.php",true);
-                        xhttp.send();
+                        euser.open("GET","edituser.php",true);
+                        euser.send();
                     }
-
-
 </script>
 
 <?php
@@ -24,7 +37,7 @@ $result = $connect->query($sql);
 
 echo "<table border='0' cellspacing='0' cellpadding='0' class='table table-bordered table-condensed'>
 <thead>
-<h1> VIEW USER DATA</h1>
+<h3> VIEW USER DATA</h3>
 <tr>
 <th>UserID</th>
 <th>First Name</th>
@@ -54,7 +67,7 @@ if($result->num_rows > 0) {
    <td>".$row['Created']."</td>
    <td>".$row['Modified']."</td>
    <td> 
-   <a href='./actions/edituser.php?User_ID=".$row['User_ID']."'><button type='button' onclick='editUser()'><i class='fas fa-edit'></i></button></a>
+   <a href='./actions/edituser.php?User_ID=".$row['User_ID']."'><button type='button' ><i class='fas fa-edit'></i></button></a>
    <a href='./actions/deleteuser.php?User_ID=".$row['User_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
    </tr>";
 
@@ -66,5 +79,4 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
-
-<div id="edituserdataoutput"></div>
+<?php ob_end_flush(); ?>

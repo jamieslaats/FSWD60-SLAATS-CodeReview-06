@@ -1,3 +1,29 @@
+<?php
+
+  ob_start();
+  session_start();
+  require_once 'actions/db_connect.php';
+
+  if (isset($_SESSION['User'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['User']. "");
+    $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
+  }
+  if (isset($_SESSION['Admin'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
+    $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
+  }
+  if(!isset($_SESSION['Admin']) && !isset($_SESSION['User'])){
+    header("Location: login.php");
+  }
+  $log = "Login";
+  if(isset($_SESSION['Admin']) || isset($_SESSION['User'])){
+    $log = "Logout";
+  }
+
+?>
+
+
+
 <!DOCTYPE html5>
 <html>
 
@@ -95,13 +121,13 @@
 
                             echo   '<div class="col-lg-3 col-md-6 col-sd-12" id="'.$sights['Content_ID'].'">
                             <div class="travelcard"><img class="travelcard-img-top" src="' .$sights['Image']. '" alt="TravelCard image cap">
-                            <div class="travelcard-body"><h3 class="travelcard-title">"' .$sights['Locationname']. '"</h3>
-                            <p class="travelcard-text"><span>Address:</span> "'.$sights['Street'].'", "' .$sights['City']. '", "' .$sights['Postcode'].  '"</p>
-                            <p class="travelcard-text"><span>Tel:</span> "' .$sights['Telephone']. '"</p>
-                            <p class="travelcard-text"><span>Metro:</span> "' .$sights['Metrostop']. '"</p>
-                            <p class="travelcard-text"><span>Opening Times:</span> "' .$sights['OpenTimes']. '"</p>
-                            <p class="travelcard-text"><span>Entry Cost:</span> "' .$sights['Entrycost']. '"</p>
-                            <p class="font-italic text-secondary">Created: "' .$sights['Created']. '"</p>
+                            <div class="travelcard-body"><h3 class="travelcard-title">' .$sights['Locationname']. '</h3>
+                            <p class="travelcard-text"><span>Address:</span> '.$sights['Street'].', ' .$sights['City']. ', ' .$sights['Postcode'].  '"</p>
+                            <p class="travelcard-text"><span>Tel:</span> ' .$sights['Telephone']. '</p>
+                            <p class="travelcard-text"><span>Metro:</span> ' .$sights['Metrostop']. '</p>
+                            <p class="travelcard-text"><span>Opening Times:</span> ' .$sights['OpenTimes']. '</p>
+                            <p class="travelcard-text"><span>Entry Cost:</span> ' .$sights['Entrycost']. '</p>
+                            <p class="font-italic text-secondary">Created: ' .$sights['Created']. '</p>
                             </div>
                             </div>
                             </div>';
@@ -136,13 +162,13 @@
 
                        echo   '<div class="col-lg-3 col-md-6 col-sd-12" id="'.$eatery['Content_ID'].'">
                        <div class="travelcard"><img class="travelcard-img-top" src="' .$eatery['Image']. '" alt="TravelCard image cap">
-                       <div class="travelcard-body"><h3 class="travelcard-title">"' .$eatery['Locationname']. '"</h3>
-                       <p class="travelcard-text"><span>Address:</span> "'.$eatery['Street'].'", "' .$eatery['City']. '", "' .$eatery['Postcode'].  '"</p>
-                       <p class="travelcard-text"><span>Tel:</span> "' .$eatery['Telephone']. '"</p>
-                       <p class="travelcard-text"><span>Style:</span> "' .$eatery['Style']. '"</p>
-                       <p class="travelcard-text"><span>Value:</span> "' .$eatery['Value']. '"</p>
-                       <p class="travelcard-text"><span>Web:</span> "' .$eatery['Webaddress']. '"</p>
-                       <p class="font-italic text-secondary">Created: "' .$eatery['Created']. '"</p>
+                       <div class="travelcard-body"><h3 class="travelcard-title">' .$eatery['Locationname']. '</h3>
+                       <p class="travelcard-text"><span>Address:</span> '.$eatery['Street'].', ' .$eatery['City']. ', ' .$eatery['Postcode'].  '</p>
+                       <p class="travelcard-text"><span>Tel:</span> ' .$eatery['Telephone']. '</p>
+                       <p class="travelcard-text"><span>Style:</span> ' .$eatery['Style']. '</p>
+                       <p class="travelcard-text"><span>Value:</span> ' .$eatery['Value']. '</p>
+                       <p class="travelcard-text"><span>Web:</span> ' .$eatery['Webaddress']. '</p>
+                       <p class="font-italic text-secondary">Created: ' .$eatery['Created']. '</p>
                        </div>
                        </div>
                        </div>';
@@ -180,13 +206,13 @@
                    echo   '<div class="col-lg-3 col-md-6 col-sd-12" id="'.$event['Content_ID'].'">
                    <div class="travelcard"><img class="travelcard-img-top" src="' .$event['Image']. '" alt="TravelCard image cap">
                    <div class="travelcard-body"><h3 class="travelcard-title">' .$event['Locationname']. '</h3>
-                   <p class="travelcard-text"><span>Location:</span> "' .$event['Eventplacename']. '"</p>
-                   <p class="travelcard-text"><span>Address:</span> "'.$event['Street'].'", "' .$event['City']. '", "' .$event['Postcode'].  '"</p>
-                   <p class="travelcard-text"><span>Tel:</span> "' .$event['Telephone']. '"</p>
-                   <p class="travelcard-text"><span>Date:</span> "' .$event['Eventdate']. '"</p>
-                   <p class="travelcard-text"><span>Showings:</span> "' .$event['Eventtime']. '"</p>
-                   <p class="travelcard-text"><span>Price:</span> "' .$event['Entrycost']. '"</p>
-                   <p class="font-italic text-secondary">Created: "' .$event['Created']. '"</p>
+                   <p class="travelcard-text"><span>Location:</span> ' .$event['Eventplacename']. '</p>
+                   <p class="travelcard-text"><span>Address:</span> '.$event['Street'].', ' .$event['City']. ', ' .$event['Postcode'].  '</p>
+                   <p class="travelcard-text"><span>Tel:</span> ' .$event['Telephone']. '</p>
+                   <p class="travelcard-text"><span>Date:</span> ' .$event['Eventdate']. '</p>
+                   <p class="travelcard-text"><span>Showings:</span> ' .$event['Eventtime']. '</p>
+                   <p class="travelcard-text"><span>Price:</span> ' .$event['Entrycost']. '</p>
+                   <p class="font-italic text-secondary">Created: ' .$event['Created']. '</p>
                    </div>
                    </div>
                    </div>';
@@ -217,3 +243,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

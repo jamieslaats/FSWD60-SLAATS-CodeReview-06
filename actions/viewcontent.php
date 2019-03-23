@@ -1,4 +1,20 @@
 <?php
+
+  ob_start();
+  session_start();
+  require_once 'actions/db_connect.php';
+
+  if (isset($_SESSION['Admin']) == ""){
+        header("Location: login.php");
+            exit;
+}
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
+    $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+
+?>
+
+<?php
 require_once 'db_connect.php';
 
 $sql = "SELECT `Content_ID`, `Image`, `Locationtype`, `Locationname`, `fk_Address_ID`,`Street`, `City`,`Postcode`,`State`,`Country`, `Telephone`, `Webaddress`, `Metrostop`, `OpenTimes`, `Value`, `Eventplacename`, `Entrycost`, `Eventtime`, `Eventdate`, `contentdata`.`Created`, `contentdata`.`Modified`, `contentdata`.`fk_User_ID`,`Empl_ID`,`Surname`
@@ -12,7 +28,7 @@ $result = $connect->query($sql);
 
 echo "<table border='0' cellspacing='0' cellpadding='0' class='table table-bordered table-condensed'>
 <thead>
-<h1> VIEW CONTENT DATA</h1>
+<h3> VIEW CONTENT DATA</h3>
 <tr>
 <th>ContentID</th>
 <th>Image</th>
@@ -70,8 +86,8 @@ if($result->num_rows > 0) {
    <td>".$row['Empl_ID']."</td>
    <td>".$row['Surname']."</td>
    <td> 
-  <a href='updatemedia.php?Content_ID=".$row['Content_ID']."'><button type='button'><i class='fas fa-edit'></i></button></a>
-  <a href='deletemedia.php?Content_ID=".$row['Content_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
+  <a href='./actions/editcontent.php?Content_ID=".$row['Content_ID']."'><button type='button'><i class='fas fa-edit'></i></button></a>
+  <a href='./actions/deletecontent.php?Content_ID=".$row['Content_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
    </tr>";
 
  }
@@ -82,3 +98,4 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
+<?php ob_end_flush(); ?>

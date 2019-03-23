@@ -1,3 +1,88 @@
+<?php
+
+ob_start();
+session_start(); // start a new session or continues the previous
+
+    if (isset($_SESSION['User'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status = ". $_SESSION['User']. "");
+    $count = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    }
+    if (isset($_SESSION['Admin'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status = ". $_SESSION['Admin']. "");
+    $count = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    }
+
+include_once 'actions/db_connect.php';
+
+
+$Email = "";
+$Password = "";
+$error = false;
+$emailError = "";
+
+if ( isset($_POST['submit']) ) {
+ 
+ $Email = trim($_POST['Email']); //trim - strips whitespace (or other characters) from the beginning and end of a string
+ $Email = strip_tags($Email); // strip_tags — strips HTML and PHP tags from a string
+ $Email = htmlspecialchars($Email); // htmlspecialchars converts special characters to HTML entities
+
+ $Password = trim($_POST['Password']);
+ $Password = strip_tags($Password);
+ $Password = htmlspecialchars($Password);
+
+  //basic email validation
+if (empty($Email)){
+    $error = true;
+    $emailError = "Please Fill In Your Email Address!";   
+} else if ( !filter_var($Email,FILTER_VALIDATE_EMAIL)) {
+  $error = true;
+  $emailError = "Please Enter Valid Address!";
+}
+
+ // password validation
+ if (empty($Password)){
+  $error = true;
+  $passError = "Please enter password.";
+ } else if(strlen($Password) < 6) {
+  $error = true;
+  $passError = "Password must have at least 6 characters.";
+ }
+
+ // if there's no error, continue to signup
+ if( !$error ) {
+
+  $pass = hash('sha256',$Password); //password hashing
+
+  $result = mysqli_query($connect, "SELECT Firstname, Surname, Email, Password, Status, Empl_ID FROM userdata WHERE Email = '$Email'");
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+  $count = mysqli_num_rows($result); // if userid, firstname, lastname, pass is correct it returns must be 1 row --> Normally this is the line  $count = mysqli_num_rows($result);
+
+  if($count ==1 && $row['Password']==$pass && $row['Status']==='Admin') {
+    $_SESSION['Admin']= $row['User_ID'];
+    header("Location: home.php");
+  } elseif ($count ==1 && $row['Password']==$pass && $row['Status']==='User') {
+                $_SESSION['User'] = $row['User_ID'];
+                header("Location: home.php");
+            }
+            else {
+                    $loginError = "Incorrect email or password";
+            }
+        }
+    }
+
+    if(isset($_POST['logout'])){
+        unset($_SESSION['user']);
+        session_destroy();
+        header("Location: login.php");
+    }
+    
+    $log = "Login";
+    if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
+        $log = "Logout";
+    }
+?>
+
+
 <!DOCTYPE html5>
 <html>
 
@@ -24,6 +109,8 @@
         </header><!-- /header -->
         <nav class="navbar navcolour navbar-justify">
             <ul class="nav nav-pills nav-justified" id="navstyling">
+                <li class="nav-item"><a href="index.php" title="Register">Register</a></li>
+                <li class="nav-item"><a href="#contact" title="Contact">Contact</a></li>
             </ul>
         </nav>
         <main>
@@ -37,13 +124,13 @@
             <!---START OF THE LOGIN SECTION --->
             <div class="fluid-container mt-2" id="login">
                 <div class="jumbotron">
-                    <form class="form-signin" method="POST" action="home.php">
+                    <form class="form-signin" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
                         <h2 class="form-signin-heading">Please Sign In:</h2>
                         <br>
                         <label for="inputEmail" class="sr-only">Email address</label>
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="Email" required>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="Email" value="<?php echo $Email ?>"  required>
                         <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="Password" required>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="Password" value="<?php echo $Password ?>" required>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" value="remember-me"> Remember Me
@@ -66,8 +153,8 @@
         </footer>
         <!--- END OF FOOTER SECTION --->
     </div>
-    <script src="JS/script.js" type="text/javascript" charset="utf-8"></script>
     <script src="JS/scriptpage2.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

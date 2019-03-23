@@ -14,6 +14,7 @@
 
 ?>
 
+
 <!DOCTYPE html5>
 <html>
 
@@ -86,12 +87,12 @@ if($_GET['User_ID']) {
 	$sql = "SELECT * FROM userdata WHERE User_ID = {$userid}";
         $result = $connect->query($sql); // mysqli_query($mysqli, $sql)
 
-        $userupdate = $result->fetch_assoc(); // mzsqli_fetch_assoc($result)
+        $deluser = $result->fetch_assoc(); // mzsqli_fetch_assoc($result)
 }        
 ?>
 <div class="updatesections">
     	<div >
-    		<h3>UPDATE USER DATA</h3>
+    		<h3>DELETE USER DATA</h3>
     	</div>
     	<hr>	
 
@@ -101,7 +102,7 @@ if($_GET['User_ID']) {
     				<label type="hidden">User_ID</label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input type="hidden" name="User_ID" value="<?php echo $userupdate["User_ID"] ?>">
+    				<input type="hidden" name="User_ID" value="<?php echo $deluser["User_ID"] ?>">
     			</div>
     		</div>	
     		<div class="row">
@@ -109,7 +110,7 @@ if($_GET['User_ID']) {
     				<label id="labellettering">First Name: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Firstname" value="<?php echo $userupdate["Firstname"] ?>">
+    				<input class="form-control" type="text" name="Firstname" value="<?php echo $deluser["Firstname"] ?>">
     			</div>
     		</div>
     		<div class="row">
@@ -117,7 +118,7 @@ if($_GET['User_ID']) {
     				<label id="labellettering">Surname: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Surname" value="<?php echo $userupdate["Surname"] ?>">
+    				<input class="form-control" type="text" name="Surname" value="<?php echo $deluser["Surname"] ?>">
     			</div>
     		</div>
     		<div class="row">
@@ -125,7 +126,7 @@ if($_GET['User_ID']) {
     				<label id="labellettering">Email: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Email" value="<?php echo $userupdate["Email"] ?>">
+    				<input class="form-control" type="text" name="Email" value="<?php echo $deluser["Email"] ?>">
     			</div>
     		</div>
     		<div class="row">
@@ -133,7 +134,7 @@ if($_GET['User_ID']) {
     				<label id="labellettering">Password: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Password" value="<?php echo $userupdate["Password"] ?>">
+    				<input class="form-control" type="text" name="Password" value="<?php echo $deluser["Password"] ?>">
     			</div>
     		</div>
     		<div class="row">
@@ -141,7 +142,7 @@ if($_GET['User_ID']) {
     				<label id="labellettering">Status: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Status" value="<?php echo $userupdate["Status"] ?>">
+    				<input class="form-control" type="text" name="Status" value="<?php echo $deluser["Status"] ?>">
     			</div>
     		</div>
     		<div class="row">
@@ -149,12 +150,12 @@ if($_GET['User_ID']) {
     				<label id="labellettering">Employee ID: </label>
     			</div>
     			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-    				<input class="form-control" type="text" name="Empl_ID" value="<?php echo $userupdate["Empl_ID"] ?>">
+    				<input class="form-control" type="text" name="Empl_ID" value="<?php echo $deluser["Empl_ID"] ?>">
     			</div>
     		</div>
     		<div class="row">
     			<div  id="labellettering" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    				<button  id="submitbtns" class="btn btn-lg btn-block" type="submit">Update User</button>
+    				<button  id="submitbtns" class="btn btn-lg btn-block" type="submit">Delete User</button>
     			</div>
     		</div>
     	</form>
@@ -165,18 +166,12 @@ if($_GET['User_ID']) {
 			require_once 'db_connect.php';
 
             if($_POST) {
-            	$firstname = $_POST['Firstname'];
-            	$surname = $_POST['Surname'];
-            	$email = $_POST['Email'];
-            	$password = $_POST['Password'];
-            	$status = $_POST['Status'];
-            	$employid = $_POST['Empl_ID'];
 
             	$userid = $_POST['User_ID'];
 
-            	$sql = "UPDATE userdata SET Firstname = '$firstname', Surname = '$surname', Email = '$email', Password = '$password', Status = '$status', Empl_ID = '$employid' WHERE User_ID = {$userid}";
+            	$sql = "DELETE FROM userdata WHERE User_ID = {$userid}";
             	if($connect->query($sql) === TRUE) {
-            		echo "<p>Successfully Updated</p>";
+            		echo "<p>Successfully Deleted</p>";
             		echo "<a href='../adminpanel.php'><button  id='submitbtns' class='btn btn-md btn' type='button'>Back to Admin Panel</button></a>";
 
             	} else {

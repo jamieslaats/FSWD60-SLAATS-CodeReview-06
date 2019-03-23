@@ -1,10 +1,28 @@
+<?php
+
+  ob_start();
+  session_start();
+  require_once 'actions/db_connect.php';
+
+  if (isset($_SESSION['Admin']) == ""){
+        header("Location: login.php");
+            exit;
+}
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
+    $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+
+?>
+
+
+
 <!DOCTYPE html5>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Happy Feet Travel Blog</title>
+    <title>Admin Panel - Happy Feet Travel Blog</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://getbootstrap.com/docs/3.3/examples/carousel/carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage.css">
@@ -59,25 +77,25 @@
                     }
 
                     function createContent() {
-                    var xhttp = new XMLHttpRequest(); //create variable xhttp
-                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
+                    var crecont = new XMLHttpRequest(); //create variable xhttp
+                        crecont.onreadystatechange = function() { //xhttp then on ready state change runs function.
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("createcontentdataoutput").innerHTML = this.responseText;
                             }
                         };
-                        xhttp.open("GET","./actions/createcontent.php",true);
-                        xhttp.send();
+                        crecont.open("GET","./actions/createcontent.php",true);
+                        crecont.send();
                     }
 
                     function viewUser() {
-                    var xhttp = new XMLHttpRequest(); //create variable xhttp
-                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
+                    var viewu = new XMLHttpRequest(); //create variable xhttp
+                        viewu.onreadystatechange = function() { //xhttp then on ready state change runs function.
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("viewuserdataoutput").innerHTML = this.responseText;
                             }
                         };
-                        xhttp.open("GET","./actions/viewuser.php",true);
-                        xhttp.send();
+                        viewu.open("GET","./actions/viewuser.php",true);
+                        viewu.send();
                     }
 
                     function viewAddress() {
@@ -92,14 +110,14 @@
                     }
 
                     function createAddress() {
-                    var xhttp = new XMLHttpRequest(); //create variable xhttp
-                        xhttp.onreadystatechange = function() { //xhttp then on ready state change runs function.
+                    var creadd = new XMLHttpRequest(); //create variable xhttp
+                        creadd.onreadystatechange = function() { //xhttp then on ready state change runs function.
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("createaddressdataoutput").innerHTML = this.responseText;
                             }
                         };
-                        xhttp.open("GET","./actions/createaddress.php",true);
-                        xhttp.send();
+                        creadd.open("GET","./actions/createaddress.php",true);
+                        creadd.send();
                     }
                 </script> <!--END OF SCRIPTS -->
                 <!-- CONTENT NAVIGATION BAR -->    
@@ -107,22 +125,23 @@
                     <nav class="navbar navcolour navbar-justify">
                         <ul class="nav nav-pills nav-justified" id="navstyling">
                             <li class="nav-item"><button class="btn btn-default" type="submit" name="Content_ID" onclick="viewContent()">View Content Data</button></li>
-                            <li class="nav-item"><button class="btn btn-default" type="submit" name="" onclick="createContent()">Create Content Data</button></li>
-                            <li class="nav-item"><button class="btn btn-default" type="submit" name="" onclick="viewUser()">View User Data</button></li>
-                            <li class="nav-item"><button class="btn btn-default" type="submit" name="" onclick="editUser()">Edit User Data</button></li>
+                            <li class="nav-item"><button class="btn btn-default" type="submit" name="Content_ID" onclick="createContent()">Create Content Data</button></li>
+                            <li class="nav-item"><button class="btn btn-default" type="submit" name="User_ID" onclick="viewUser()">View User Data</button></li>
                             <li class="nav-item"><button class="btn btn-default" type="submit" name="" onclick="viewAddress()">View Address Data</button></li>
                             <li class="nav-item"><button class="btn btn-default" type="submit" name="" onclick="createAddress()">Create Address Data</button></li>
                         </ul>
                     </nav>
                 </div> <!--END OF CONTENT NAGIGATION BAR -->
 
-                <!--CONTENT OUTPUT SECTION from NAVBAR-->    
+                <!--CONTENT OUTPUT SECTION from NAVBAR-->
+                <div class="jumbotron">
+                        
                 <div id="viewcontentdataoutput"></div>
                 <div id="createcontentdataoutput"></div>
                 <div id="viewuserdataoutput"></div>
-                <div id="edituserdataoutput"></div>
                 <div id="viewaddressdataoutput"></div>
                 <div id="createaddressdataoutput"></div>
+                </div>    
                 <!--END of CONTENT OUTPUT SECTION from NAVBAR-->  
 
             </div>
@@ -141,3 +160,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

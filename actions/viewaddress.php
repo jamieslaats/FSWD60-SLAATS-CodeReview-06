@@ -1,4 +1,20 @@
 <?php
+
+  ob_start();
+  session_start();
+  require_once 'actions/db_connect.php';
+
+  if (isset($_SESSION['Admin']) == ""){
+        header("Location: login.php");
+            exit;
+}
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
+    $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+
+?>
+
+<?php
 require_once 'db_connect.php';
 
 $sql = "SELECT * FROM `addressdata`";
@@ -8,7 +24,7 @@ $result = $connect->query($sql);
 
 echo "<table border='0' cellspacing='0' cellpadding='0' class='table table-bordered table-condensed'>
 <thead>
-<h1> VIEW ADDRESS DATA</h1>
+<h3> VIEW ADDRESS DATA</h3>
 <tr>
 <th>AddressID</th>
 <th>Street</th>
@@ -36,8 +52,8 @@ if($result->num_rows > 0) {
    <td>".$row['Created']."</td>
    <td>".$row['Modified']."</td>
    <td> 
-  <a href='updatemedia.php?Address_ID=".$row['Address_ID']."'><button type='button'><i class='fas fa-edit'></i></button></a>
-  <a href='deletemedia.php?Address_ID=".$row['Address_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
+  <a href='./actions/editaddress.php?Address_ID=".$row['Address_ID']."'><button type='button'><i class='fas fa-edit'></i></button></a>
+  <a href='./actions/deleteaddress.php?Address_ID=".$row['Address_ID']."'><button type='button'><i class='fas fa-trash-alt'></i></button></a>
    </tr>";
 
  }
@@ -48,3 +64,4 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
+<?php ob_end_flush(); ?>
