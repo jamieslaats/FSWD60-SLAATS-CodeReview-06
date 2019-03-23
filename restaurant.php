@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
   ob_start();
   session_start();
@@ -19,7 +19,7 @@
   if(isset($_SESSION['Admin']) || isset($_SESSION['User'])){
     $log = "Logout";
   }
-
+ */
 ?>
 
 
@@ -161,4 +161,4 @@
 
 </html>
 
-<?php ob_end_flush(); ?>
+<?php //ob_end_flush(); ?>

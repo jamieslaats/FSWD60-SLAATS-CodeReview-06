@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
   ob_start();
   session_start();
@@ -11,7 +11,7 @@
     $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
     $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-
+*/
 ?>
 
 <?php
@@ -22,7 +22,7 @@ $sql = "SELECT * FROM `addressdata`";
        //when createing above like this `authors`.Name as authorName it is making it more simple to remember and link the name. Then used below. 
 $result = $connect->query($sql);
 
-echo "<table border='0' cellspacing='0' cellpadding='0' class='table table-bordered table-condensed'>
+echo "<table class='table table-bordered table'>
 <thead>
 <h3> VIEW ADDRESS DATA</h3>
 <tr>
@@ -64,4 +64,4 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
-<?php ob_end_flush(); ?>
+<?php // ob_end_flush(); ?>

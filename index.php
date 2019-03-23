@@ -5,22 +5,23 @@ session_start(); // start a new session or continues the previous
 
 if(isset($_SESSION['User']) || isset($_SESSION['Admin'])){
     header("Location: home.php");  //redirects to home.php
-  }
+}
+
 
 include_once 'actions/db_connect.php';
-$error = false;
+
 
 $Firstname = "";
 $Surname = "";
 $Email = "";
 $pass = "";
 $emailError = "";
-
+$passError = "";
+$error = false;
 
 
 if ( isset($_POST['btn-signup']) ) {
-
- // sanitize user input to prevent sql injection
+    // sanitize user input to prevent sql injection
  $Firstname = trim($_POST['Firstname']); //trim - strips whitespace (or other characters) from the beginning and end of a string
  $Firstname = strip_tags($Firstname); // strip_tags — strips HTML and PHP tags from a string
  $Firstname = htmlspecialchars($Firstname); // htmlspecialchars converts special characters to HTML entities
@@ -37,40 +38,58 @@ if ( isset($_POST['btn-signup']) ) {
  $Password = strip_tags($Password);
  $Password = htmlspecialchars($Password);
 
- // password hashing for security
+ 
+ //basic email validation
+ if ( !filter_var($Email,FILTER_VALIDATE_EMAIL) ) {
+  $error = true;
+  $emailError = "Please enter valid email address.";
+} else {
+  // checks whether the email exists or not
+  $sql = "SELECT Email FROM userdata WHERE Email ='$Email'";
+  $result = mysqli_query($connect, $sql);
+  $count = mysqli_num_rows($result);
+  
+  if($count!=0){
+   $error = true;
+   $emailError = "Provided Email is already in use.";
+}
+}
+ // password validation
+if (empty($Password)){
+  $error = true;
+  $passError = "Please enter password.";
+} else if(strlen($Password) < 6) {
+  $error = true;
+  $passError = "Password must have at least 6 characters.";
+}
+
+// password hashing for security
 $pass = hash('sha256', $Password);
 
 
-  $sql = "SELECT Email FROM userdata WHERE Email='$Email'";
-  $result = mysqli_query($connect, $sql);
-  $emailRows = mysqli_num_rows($result);
+ // if there's no error, continue to login
+if (!$error) {
 
+    $sql = "INSERT INTO userdata(Firstname,Surname,Email,Password) VALUES ('$Firstname','$Surname','$Email','$pass')";
+    $result = mysqli_query($connect, $sql);
 
-if($emailRows!=0){
-     $error = true;
-     $emailError = "Provided Email is already in use.";
+    if ($result) {
+     $errTyp = "Success";
+     $errMSG = "Successfully registered, you may login now";
+     unset($Firstname);
+     unset($Surname);
+     unset($Email);
+     unset($Password);
+ 
+ } else {
+     $errTyp = "danger";
+     $errMSG = "Something went wrong, try again later...";
  }
-
- else if ( !filter_var($Email,FILTER_VALIDATE_EMAIL) ) {
-  $error = true;
-  $emailError = "Please enter valid email address.";
+ 
 }
-
-if( !$error ) {
-
-  $sql = "INSERT INTO userdata(Firstname,Surname,Email,Password) VALUES('$Firstname','$Surname','$Email','$pass')";
-  $result = mysqli_query($connect, $sql);
-    if($connect->query($sql) === FALSE){
-        echo "Error signing up". $connect->connect_error;
-        }
-    }
-  $log = "Login";
-  if(isset($_SESSION['Admin']) || isset($_SESSION['User'])){
-    $log = "Logout";
-  }
-
-  }
+}
 ?>
+
 
 <!DOCTYPE html5>
 <html>
@@ -121,7 +140,7 @@ if( !$error ) {
                 <!---START OF THE REGISTRATION SECTION --->
                 <div class="fluid-container mt-2" id="introduction">
                     <div class="jumbotron">
-                        <form class="formregistration" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" accept-charset="utf-8">
+                        <form class="formregistration" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" autocomplete="off" accept-charset="utf-8">
                             <h2 class="regformlettering">Registration Form:</h2><br/>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -129,7 +148,6 @@ if( !$error ) {
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <input class="form-control" type="text" name="Firstname" placeholder="Eg. Johnny" value="<?= $Firstname ?>">
-                                    <!-- <span class="text-danger"><?php echo $FirstnameError ?></span> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -138,7 +156,6 @@ if( !$error ) {
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <input class="form-control" type="text" name="Surname" placeholder="Eg. Cash" value="<?= $Surname ?>">
-                                    <!-- <span class="text-danger"><?php echo $SurnameError ?></span> -->
                                 </div>
                             </div>
                             <div class="row">
@@ -147,7 +164,7 @@ if( !$error ) {
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <input class="form-control" type="text" name="Email" placeholder="Eg. Johnny@johnny.co" value="<?= $Email ?>">
-                                    <!-- <span class="text-danger"><?php echo $emailError ?></span> -->
+                                    <span class="text-danger"><?php echo $emailError ?></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -156,15 +173,17 @@ if( !$error ) {
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <input class="form-control" type="text" name="Password" placeholder="Eg. Q@57ty*%hf" value="<?= $pass ?>">
-                                    <!--  <span class="text-danger"><?php echo $passError ?></span> -->
+                                    <span class="text-danger"><?php echo $passError ?></span>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div id="regformlettering" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <a href="login.php"><button id="loginbtn" class="btn btn-lg btn-block" name="btn-signup" type="submit">Submit Registration Details</button></a>
-                                </div>
-
+                                    <button id="loginbtn" class="btn btn-lg btn-block" name="btn-signup" type="submit">Submit Registration Details</button>
+                                    <br>
+                                </div >
+                                <a href="login.php"><center>Sign In Here... </center></a>                               
+                            </div>
                             </form>
 
                         </div>

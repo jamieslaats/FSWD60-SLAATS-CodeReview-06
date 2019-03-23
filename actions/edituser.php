@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
   ob_start();
   session_start();
@@ -11,7 +11,7 @@
     $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
     $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-
+*/
 ?>
 
 <!DOCTYPE html5>
@@ -204,4 +204,4 @@ if($_GET['User_ID']) {
 </body>
 
 </html>
-<?php ob_end_flush(); ?>
+<?php // ob_end_flush(); ?>

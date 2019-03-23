@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
   ob_start();
   session_start();
@@ -11,7 +11,7 @@
     $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
     $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-
+*/
 ?>
 
 <div class="createdatasections" id="hidesection">
@@ -110,4 +110,4 @@ if($_POST) {
 
 }
 ?>
-<?php ob_end_flush(); ?>
+<?php // ob_end_flush(); ?>

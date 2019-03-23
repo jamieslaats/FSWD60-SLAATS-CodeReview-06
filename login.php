@@ -3,14 +3,14 @@
 ob_start();
 session_start(); // start a new session or continues the previous
 
-    if (isset($_SESSION['User'])){
-    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status = ". $_SESSION['User']. "");
+if (isset($_SESSION['User'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE User_ID = ". $_SESSION['User']. "");
     $count = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    }
-    if (isset($_SESSION['Admin'])){
-    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status = ". $_SESSION['Admin']. "");
+}
+if (isset($_SESSION['Admin'])){
+    $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE User_ID = ". $_SESSION['Admin']. "");
     $count = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    }
+}
 
 include_once 'actions/db_connect.php';
 
@@ -19,9 +19,10 @@ $Email = "";
 $Password = "";
 $error = false;
 $emailError = "";
+$passError = "";
 
 if ( isset($_POST['submit']) ) {
- 
+
  $Email = trim($_POST['Email']); //trim - strips whitespace (or other characters) from the beginning and end of a string
  $Email = strip_tags($Email); // strip_tags — strips HTML and PHP tags from a string
  $Email = htmlspecialchars($Email); // htmlspecialchars converts special characters to HTML entities
@@ -31,7 +32,7 @@ if ( isset($_POST['submit']) ) {
  $Password = htmlspecialchars($Password);
 
   //basic email validation
-if (empty($Email)){
+ if (empty($Email)){
     $error = true;
     $emailError = "Please Fill In Your Email Address!";   
 } else if ( !filter_var($Email,FILTER_VALIDATE_EMAIL)) {
@@ -40,16 +41,16 @@ if (empty($Email)){
 }
 
  // password validation
- if (empty($Password)){
+if (empty($Password)){
   $error = true;
   $passError = "Please enter password.";
- } else if(strlen($Password) < 6) {
+} else if(strlen($Password) < 6) {
   $error = true;
   $passError = "Password must have at least 6 characters.";
- }
+}
 
- // if there's no error, continue to signup
- if( !$error ) {
+ // if there's no error, continue to signin
+if( !$error ) {
 
   $pass = hash('sha256',$Password); //password hashing
 
@@ -60,26 +61,15 @@ if (empty($Email)){
   if($count ==1 && $row['Password']==$pass && $row['Status']==='Admin') {
     $_SESSION['Admin']= $row['User_ID'];
     header("Location: home.php");
-  } elseif ($count ==1 && $row['Password']==$pass && $row['Status']==='User') {
-                $_SESSION['User'] = $row['User_ID'];
-                header("Location: home.php");
-            }
-            else {
-                    $loginError = "Incorrect email or password";
-            }
-        }
-    }
-
-    if(isset($_POST['logout'])){
-        unset($_SESSION['user']);
-        session_destroy();
-        header("Location: login.php");
-    }
-    
-    $log = "Login";
-    if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
-        $log = "Logout";
-    }
+} elseif ($count ==1 && $row['Password']==$pass && $row['Status']==='User') {
+    $_SESSION['User'] = $row['User_ID'];
+    header("Location: home.php");
+}
+else {
+    $loginError = "Incorrect email or password";
+}
+}
+}
 ?>
 
 
@@ -125,18 +115,25 @@ if (empty($Email)){
             <div class="fluid-container mt-2" id="login">
                 <div class="jumbotron">
                     <form class="form-signin" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                        <?php 
+                            if ( isset($errMSG) ) {
+                                 echo $errMSG;}
+                        ?>
                         <h2 class="form-signin-heading">Please Sign In:</h2>
                         <br>
+
                         <label for="inputEmail" class="sr-only">Email address</label>
                         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="Email" value="<?php echo $Email ?>"  required>
+                        <span class="text-danger"><?php echo $emailError; ?></span>
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="Password" value="<?php echo $Password ?>" required>
+                        <span class="text-danger"><?php echo $passError; ?></span>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" value="remember-me"> Remember Me
                             </label>
                         </div>
-                        <a href="home.php"><button id="loginbtn" class="btn btn-lg btn-block" type="submit" name="submit">Sign in</button></a>
+                        <button id="loginbtn" class="btn btn-lg btn-block" type="submit" name="submit">Sign in</button>
                     </form>
                     
                 </div>

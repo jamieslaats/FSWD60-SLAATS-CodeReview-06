@@ -1,4 +1,4 @@
-<?php
+<?php /*
 
   ob_start();
   session_start();
@@ -11,10 +11,10 @@
     $result = mysqli_query($connect, "SELECT * FROM `userdata` WHERE Status=". $_SESSION['Admin']. "");
     $count=mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-
+*/
 ?>
 <!--This script is written, but at the moment isn't working as planned need to come back to understand why -->
-<script>
+ <!-- <script>
    function editUser() {
                     var euser = new XMLHttpRequest(); //create variable xhttp
                         euser.onreadystatechange = function() { //xhttp then on ready state change runs function.
@@ -25,7 +25,7 @@
                         euser.open("GET","edituser.php",true);
                         euser.send();
                     }
-</script>
+ </script> -->
 
 <?php
 require_once 'db_connect.php';
@@ -79,4 +79,4 @@ echo "</tbody></table>";
 
 $connect->close();
 ?>
-<?php ob_end_flush(); ?>
+<?php // ob_end_flush(); ?>
